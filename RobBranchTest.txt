@@ -6,3 +6,5 @@ Even more changes!!!
 >>>>>>> origin/master
 
 Commit and Push
+
+Commmit to my branch and Push to My branch
