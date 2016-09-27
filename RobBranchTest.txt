@@ -1,2 +1,6 @@
 More Changes
+<<<<<<< HEAD
 Test
+=======
+Even more changes!!!
+>>>>>>> origin/master
