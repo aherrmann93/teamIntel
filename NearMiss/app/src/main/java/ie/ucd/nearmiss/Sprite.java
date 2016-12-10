@@ -13,6 +13,8 @@ public abstract class Sprite {
     private int locy;       // location in y
     private int vecx;       // x vector
     private int vecy;       // y vector
+    private double accx;     // x acceleration
+    private double accy;     // y acceleration
     private int width;      // width of the object
     private int height;     // height of the object
     private Bitmap image;   // image of the object
@@ -33,6 +35,22 @@ public abstract class Sprite {
 
     public int getY() {
         return locy;
+    }
+
+    public void setAccX(double accx) {
+        this.accx = accx;
+    }
+
+    public void setAccY(double accy) {
+        this.accy = accy;
+    }
+
+    public double getAccX() {
+        return accx;
+    }
+
+    public double getAccY() {
+        return accy;
     }
 
     public void setVecX(int x) {
