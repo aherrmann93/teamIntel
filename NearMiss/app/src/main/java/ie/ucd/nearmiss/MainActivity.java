@@ -7,11 +7,14 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    ie.ucd.nearmiss.View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create buttons from the XML View
         Button play = (Button) findViewById(R.id.playb);
         play.setOnClickListener(this);
 
@@ -25,11 +28,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         googleplaybutton.setOnClickListener(this);
     }
 
+    // On Click Methods
     @Override
     public void onClick(View v) {
         Button clicked = (Button) v;
         switch(clicked.getId()) {
             case R.id.playb:
+                setContentView(view = new ie.ucd.nearmiss.View(this));
                 break;
             case R.id.levelb:
                 break;
