@@ -1,6 +1,8 @@
 package ie.ucd.nearmiss;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 
 /**
     Each game object will have the following attributes
@@ -71,5 +73,18 @@ public abstract class Sprite {
 
     public Bitmap getImage() {
         return image;
+    }
+
+    // Get the rectangle around the object. Used to set the boundry for collisions
+
+    public Rect getBoundary() {
+        return new Rect(locx,locy, locx+width, locy+height);
+    }
+
+    // Draw the sprite on the canvas
+
+    public void draw(Canvas canvas) {
+
+        canvas.drawBitmap(getImage(), getX(), getY(), null);
     }
 }
