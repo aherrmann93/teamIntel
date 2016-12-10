@@ -7,7 +7,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ie.ucd.nearmiss.View view;
+    Game view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button clicked = (Button) v;
         switch(clicked.getId()) {
             case R.id.playb:
-                setContentView(view = new ie.ucd.nearmiss.View(this));
+                setContentView(view = new Game(this));
                 break;
             case R.id.levelb:
                 break;

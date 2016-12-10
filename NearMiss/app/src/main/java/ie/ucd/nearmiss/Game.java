@@ -1,6 +1,8 @@
 package ie.ucd.nearmiss;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -12,15 +14,15 @@ import android.view.SurfaceView;
     It has been modified to suit the needs of our game.
  */
 
-public class View extends SurfaceView implements SurfaceHolder.Callback{
+public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
     private ControllerThread controllerThread;
     private Sky sky;
     private Plane plane;
     private boolean playing = false;
 
-    public View(Context context) {
-        super(context); // Call the superclass SurfaceView's constructor
+    public Game(Context menu) {
+        super(menu); // Call the superclass SurfaceView's constructor
         getHolder().addCallback(this);
 
         // Start the Controller Thread to get the game going
@@ -86,6 +88,8 @@ public class View extends SurfaceView implements SurfaceHolder.Callback{
 
             if((plane.getY()<0)||(plane.getY()>getHeight())) {
                 playing = false;
+                Intent intent = new Intent().setClass(getContext(), MainActivity.class);
+                getContext().startActivity(intent);
             }
         }
 

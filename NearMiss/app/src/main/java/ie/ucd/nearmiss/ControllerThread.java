@@ -12,13 +12,13 @@ public class ControllerThread extends Thread {
     private int FPS = 30;   //capping the frames per second to be 30
     private double averageFPS;
     private SurfaceHolder surfaceHolder;
-    private View view;
+    private Game view;
     private boolean running;
     public static Canvas canvas;
 
     private static final int NANOSEC = 1000000000;
 
-    public ControllerThread(SurfaceHolder surfaceHolder, View view) {
+    public ControllerThread(SurfaceHolder surfaceHolder, Game view) {
         super();
         this.surfaceHolder = surfaceHolder;
         this.view = view;
