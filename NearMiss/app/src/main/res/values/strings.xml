@@ -6,4 +6,7 @@
     <string name="leaderboard">Leaderboard</string>
     <string name="google_play_games">Google Play Games</string>
     <string name="signin_other_error">There was an issue with sign in.  Please try again later.</string>
+    <string name="set_score">Set Score</string>
+    <string name="submit_score">Submit Score</string>
+    <string name="level_easy">Level: Easy</string>
 </resources>

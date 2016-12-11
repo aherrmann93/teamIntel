@@ -1,12 +1,20 @@
 package ie.ucd.nearmiss;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public Game view;
     TextView welcome;
+
+    private int sampleScore;
+    private int level = 0;
+    Toolbar toolbar;
 
     /** Variables for Google Services (from the Google API Docs: https://developers.google.com/games/services/training/signin)**/
 
@@ -121,6 +133,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create the toolbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         // Create buttons from the XML View
         findViewById(R.id.playb).setOnClickListener(this);
         findViewById(R.id.levelb).setOnClickListener(this);
@@ -139,15 +155,95 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.set_score) {
+            getSampleScore();
+            return true;
+        }
+        if (id == R.id.submit_score) {
+            updateLeaderboards(sampleScore);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void getSampleScore() {
+        AlertDialog.Builder ip_dialog = new AlertDialog.Builder(this);
+        ip_dialog.setTitle("Set Score to Push");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        input.setRawInputType(Configuration.KEYBOARD_12KEY);
+        ip_dialog.setView(input);
+
+        // Set up the buttons
+        ip_dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Take string and set it to a integer
+                sampleScore = Integer.parseInt(input.getText().toString());
+            }
+        });
+        ip_dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        ip_dialog.show();
+    }
+
+    // Method which updates the leadboards. It takes scoreToPush and the current level and uses that to push the score to the Google play servers
+    public void updateLeaderboards(int scoreToPush) {
+        if (level == 0) {
+            Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.easy_leaderboard),
+                    scoreToPush);
+        }
+        else if (level == 1) {
+            Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.medium_leaderboard),
+                    scoreToPush);
+        }
+        else {
+            Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.hard_leaderboard),
+                    scoreToPush);
+        }
+    }
+
     // On Click Methods
     @Override
     public void onClick(View v) {
         Button clicked = (Button) v;
+        Button levelButton = (Button) findViewById(R.id.levelb);
         switch(clicked.getId()) {
             case R.id.playb:
-                setContentView(view = new Game(this));
+                setContentView(view = new Game(this, level));
                 break;
             case R.id.levelb:
+                if (level == 0) {
+                    level = 1;
+                    levelButton.setText("Level: Medium");
+                }
+                else if (level == 1) {
+                    level = 2;
+                    levelButton.setText("Level: Hard");
+                }
+                else {
+                    level = 0;
+                    levelButton.setText("Level: Easy");
+                }
                 break;
             case R.id.leaderb:
                 if (isSignedIn()) {

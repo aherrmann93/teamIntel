@@ -10,7 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 /**
-    THIS CLASS USES CODE FROM THE TUTORIAL MENTIONED IN CONTROLLERTHREAD.java
+    THIS CLASS IS A MODIFIED VERSION OF THE TUTORIAL MENTIONED IN CONTROLLERTHREAD.java
     It has been modified to suit the needs of our game.
  */
 
@@ -20,10 +20,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private Sky sky;
     private Plane plane;
     private boolean playing = false;
+    private int level;
 
-    public Game(Context menu) {
+    public Game(Context menu, int level) {
         super(menu); // Call the superclass SurfaceView's constructor
         getHolder().addCallback(this);
+        this.level = level;
 
         // Start the Controller Thread to get the game going
         controllerThread = new ControllerThread(getHolder(), this);

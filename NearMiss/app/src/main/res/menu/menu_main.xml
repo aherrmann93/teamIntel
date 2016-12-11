@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ie.ucd.nearmiss.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/set_score"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/set_score"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/submit_score"
+        android:orderInCategory="100"
+        android:title="@string/submit_score"
         app:showAsAction="never" />
 </menu>

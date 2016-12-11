@@ -36,15 +36,6 @@
         android:layout_marginTop="10dp" />
 
     <Button
-        android:text="@string/levels"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/playb"
-        android:layout_alignStart="@+id/playb"
-        android:id="@+id/levelb"
-        android:layout_marginTop="10dp" />
-
-    <Button
         android:text="@string/leaderboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,5 +61,14 @@
         android:visibility="gone"
         android:layout_below="@+id/sign_in_button"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="@string/level_easy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/levelb"
+        android:layout_below="@+id/playb"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>
