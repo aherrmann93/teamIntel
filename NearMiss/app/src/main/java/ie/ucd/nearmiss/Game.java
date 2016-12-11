@@ -88,6 +88,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
             if((plane.getY()<0)||(plane.getY()>getHeight())) {
                 playing = false;
+                // Go back to the main menu
                 Intent intent = new Intent().setClass(getContext(), MainActivity.class);
                 getContext().startActivity(intent);
             }

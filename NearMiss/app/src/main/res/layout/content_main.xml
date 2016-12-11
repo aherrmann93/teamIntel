@@ -15,7 +15,7 @@
     android:background="@drawable/sky_wikipedia">
 
     <TextView
-        android:text="Welcome"
+        android:text="Welcome, Tap to Sign In:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -54,12 +54,21 @@
         android:layout_marginTop="10dp" />
 
     <Button
-        android:text="@string/google_play_games"
+        android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/googleplayb"
-        android:layout_below="@+id/leaderb"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:text="Sign In"
+        />
+
+    <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Out"
+        android:visibility="gone"
+        android:layout_below="@+id/sign_in_button"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
