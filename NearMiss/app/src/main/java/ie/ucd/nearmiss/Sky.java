@@ -4,20 +4,27 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 /**
-    Class which models the Sky. The Sky is an extension of the Sprite class.
-    The Update method updates the position of the sky.
-    The Draw method draws the sky (it overrides the method in the Sprite class as it needs to draw another image of the sky as it moves off the screen
- */
+*   Class which models the Sky. The Sky is an extension of the Sprite class.
+*/
 
 public class Sky extends Sprite {
-
+    
+    /**
+    * Constructor for the Sky object.
+    *
+    * @param sky_image Bitmap image of the sky
+    * @param w Width of the sky image
+    * @param h Height of the sky image
+    */
     public Sky(Bitmap sky_image, int w, int h) {
         setImage(sky_image);
         setWidth(w);
         setHeight(h);
     }
 
-    // Update the position of the sky in the model
+    /**
+    * Updates the position of the sky in the canvas
+    */
     public void update() {
         setX(getX()+getVecX());     // move x by the x vector
 
@@ -27,7 +34,13 @@ public class Sky extends Sprite {
         }
 
     }
-    // Override the method we created in Sprite class
+    /**
+    * Draws the sky object onto the canvas.
+    *
+    * This method overrides the method described in the sprite class, as we require that the sky is redrawn next to itself as it moves off the screen.
+    * 
+    * @param canvas Canvas on which to draw the sky on.
+    */
     @Override
     public void draw(Canvas canvas) {
 
