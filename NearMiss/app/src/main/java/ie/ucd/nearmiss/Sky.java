@@ -23,7 +23,7 @@ public class Sky extends Sprite {
     }
 
     /**
-    * Updates the position of the sky in the canvas
+    * Updates the position of the sky model
     */
     public void update() {
         setX(getX()+getVecX());     // move x by the x vector
