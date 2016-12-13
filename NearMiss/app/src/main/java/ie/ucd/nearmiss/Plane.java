@@ -3,15 +3,31 @@ package ie.ucd.nearmiss;
 import android.graphics.Bitmap;
 
 /**
- * Created by adam on 10/12/2016.
- */
+*   Class which models the Plane. The Sky is an extension of the Sprite class.
+*/
 
 public class Plane extends Sprite {
-
+    
+    /**
+    * Initial position of the plane in the x plane
+    */
     private static final int STARTPOSX = 100;
+    /**
+    * Initial position of the plane in the y plane
+    */
     private static final int STARTPOSY = 50;
+    /**
+    * Is the plane going up or down?
+    */
     private boolean up;
-
+    
+    /**
+    * Constructor for the Plane object.
+    *
+    * @param sky_image Bitmap image of the plane
+    * @param w Width of the plane image
+    * @param h Height of the plane image
+    */
     public Plane (Bitmap plane_image, int w, int h) {
         setImage(plane_image);
         setWidth(w);
@@ -20,11 +36,18 @@ public class Plane extends Sprite {
         setY(STARTPOSY);
     }
 
-
+    /**
+    * Sets whther the plane is moving up or down
+    *
+    * @param up Is the plane going up (true/false)
+    */
     public void goUp (boolean up) {
         this.up = up;
     }
 
+    /**
+    * Updates the position of the plane model
+    */
     public void update () {
         if(up) {
             setAccY(getAccY()-1.1);
