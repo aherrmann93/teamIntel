@@ -49,14 +49,14 @@ public abstract class Sprite {
     
     /**
     * Set Location of Sprite in x Plane
-    * @param Location of Sprite in x Plane
+    * @param x Location of Sprite in x Plane
     */
     public void setX(int x) {
         this.locx = x;
     }
     /**
     * Set Location of Sprite in y Plane
-    * @param Location of Sprite in y Plane
+    * @param y Location of Sprite in y Plane
     */
     public void setY(int y) {
         this.locy = y;

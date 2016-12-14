@@ -24,7 +24,7 @@ public class Plane extends Sprite {
     /**
     * Constructor for the Plane object.
     *
-    * @param sky_image Bitmap image of the plane
+    * @param plane_image Bitmap image of the plane
     * @param w Width of the plane image
     * @param h Height of the plane image
     */
