@@ -13,26 +13,56 @@ import java.util.Random;
 import android.graphics.Rect;
 
 /**
-    THIS CLASS IS A MODIFIED VERSION OF THE TUTORIAL MENTIONED IN CONTROLLERTHREAD.java
-    It has been modified to suit the needs of our game.
+ * Game View which Handles the Interaction Between the Game Controller and the Models for Each Sprite
  */
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
+	/**
+	* Width of Sky backdrop
+	*/
     public static final int WIDTH = 2560;
+    /**
+	* Height of Sky backdrop
+	*/
     public static final int HEIGHT = 1349;
+    /**
+	* Speed the sky moves in (px/ms)
+	*/
     public static final int MOVESPEED = -5;
+    /**
+	* Game Controller class
+	*/
     private ControllerThread controllerThread;
+    /**
+	* Sky object 
+	*/
     private Sky sky;
+    /**
+	* Plane object
+	*/
     private Plane plane;
+    /**
+	* Is the game currently being played?
+	*/
     private boolean playing = false;
+    /**
+	* User selected level
+	*/
     private int level;
+    
     private long obstacleStartTime;
     private long obstacleElapsed;
     private ArrayList<Obstacle> obstacles;
     private Random rand = new Random();
     private int levelspeed;
-
+    
+	/**
+    * Constructor for the Game View.
+    *
+    * @param menu Reference back to the menu screen (Main Activity)
+    * @param level The user selected level
+    */
     public Game(Context menu, int level) {
         super(menu); // Call the superclass SurfaceView's constructor
         getHolder().addCallback(this);
@@ -78,7 +108,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         controllerThread.start();
     }
 
-    // Controls what happens when the user touches the screen
+    /** 
+    * Controls what happens when the user touches the screen
+    *
+    * @param event The motion event which occurred
+    */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction()==MotionEvent.ACTION_DOWN) {
