@@ -20,6 +20,14 @@ public class Plane extends Sprite {
     * Is the plane going up or down?
     */
     private boolean up;
+    /**
+     * Variable for calculating playtime during session
+     */
+    private long startTime;
+    /**
+     * Part of player score as they play the level
+     */
+    private int score;
     
     /**
     * Constructor for the Plane object.
@@ -49,6 +57,13 @@ public class Plane extends Sprite {
     * Updates the position of the plane model
     */
     public void update () {
+
+        long elapsed = (System.nanoTime()-startTime)/1000000;
+
+        if (elapsed>0) {
+            score++;
+            startTime = System.nanoTime();
+        }
         if(up) {
             setAccY(getAccY()-1.1);
             setVecY((int)(getAccY()));
@@ -71,5 +86,10 @@ public class Plane extends Sprite {
 
         setVecY(0);
 
+    }
+
+    //Method to return player score
+    public int planescore() {
+        return score;
     }
 }

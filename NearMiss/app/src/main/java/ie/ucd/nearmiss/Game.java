@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint; //add paint for scoreboard
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -47,6 +50,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 	*/
     private boolean playing = false;
     /**
+     * Has the player lost in the game?
+     */
+    private boolean reset = false;
+    /**
 	* User selected level
 	*/
     private int level;
@@ -56,6 +63,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private ArrayList<Obstacle> obstacles;
     private Random rand = new Random();
     private int levelspeed;
+    private int playerscore = 0;
+    private int obstaclespassed = 0;
     
 	/**
     * Constructor for the Game View.
@@ -138,6 +147,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         if (playing) {
             sky.update();
             plane.update();
+            playerscore = plane.planescore()+obstaclespassed; //get player score
             long obstacleElapsed = (System.nanoTime() - obstacleStartTime) / 1000000;
             if (obstacleElapsed > (4000-(level*1000))) {
                 obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(), R.drawable.obstacle1), WIDTH + 10,100+((int)(rand.nextDouble()*(HEIGHT-100))), 200, 300, levelspeed));
@@ -153,6 +163,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
                 if (collision(obstacles.get(i), plane)) {
                     obstacles.remove(i);
                     playing = false;
+                    reset = true; //player has failed level
                     Intent intent = new Intent().setClass(getContext(), MainActivity.class);
                     getContext().startActivity(intent);
                     break;
@@ -160,6 +171,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
                 //remove missile if it is way off the screen
                 if (obstacles.get(i).getX() < -100) {
                     obstacles.remove(i);
+                    obstaclespassed += 500; //Points for passing an obstacle
                     break;
                 }
             }
@@ -167,6 +179,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
             if ((plane.getY() < 0) || (plane.getY() > getHeight())) {
                 playing = false;
+                reset = true; //player has failed level
                 // Go back to the main menu
                 Intent intent = new Intent().setClass(getContext(), MainActivity.class);
                 getContext().startActivity(intent);
@@ -205,6 +218,30 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
             canvas.restoreToCount(savedState);
         }
+
+        drawText(canvas);
+    }
+
+    //Method to draw game instructions and player score
+    public void drawText(Canvas canvas) {
+        if (playing) {
+            Paint paint = new Paint();
+            paint.setColor(Color.BLACK);
+            paint.setTextSize(50);
+            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            canvas.drawText("CURRENT SCORE: " + (playerscore), 150, 950, paint);
+        }
+
+        if(!playing && !reset) {
+            Paint paint1 = new Paint();
+            paint1.setTextSize(60);
+            paint1.setTypeface(Typeface.create(Typeface.DEFAULT,Typeface.BOLD));
+            canvas.drawText("TAP TO BEGIN",400,400,paint1);
+
+            paint1.setTextSize(40);
+            canvas.drawText("PRESS AND HOLD TO GO UP",400,440,paint1);
+        }
+
     }
 
 }
