@@ -156,57 +156,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.set_score) {
-            getSampleScore();
-            return true;
-        }
-        if (id == R.id.submit_score) {
-            updateLeaderboards(sampleScore);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void getSampleScore() {
-        AlertDialog.Builder ip_dialog = new AlertDialog.Builder(this);
-        ip_dialog.setTitle("Set Score to Push");
-
-        // Set up the input
-        final EditText input = new EditText(this);
-        input.setRawInputType(Configuration.KEYBOARD_12KEY);
-        ip_dialog.setView(input);
-
-        // Set up the buttons
-        ip_dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Take string and set it to a integer
-                sampleScore = Integer.parseInt(input.getText().toString());
-            }
-        });
-        ip_dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        ip_dialog.show();
-    }
-
     // Method which updates the leadboards. It takes scoreToPush and the current level and uses that to push the score to the Google play servers
     public void updateLeaderboards(int scoreToPush) {
         if (isSignedIn()) {
