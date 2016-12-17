@@ -8,12 +8,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint; //add paint for scoreboard
 import android.graphics.Typeface;
+import android.support.design.widget.Snackbar;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.Random;
 import android.graphics.Rect;
+import android.widget.Toast;
 
 /**
  * Game View which Handles the Interaction Between the Game Controller and the Models for Each Sprite
@@ -65,6 +67,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private int levelspeed;
     private int playerscore = 0;
     private int obstaclespassed = 0;
+    private MainActivity main;
     
 	/**
     * Constructor for the Game View.
@@ -72,10 +75,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     * @param menu Reference back to the menu screen (Main Activity)
     * @param level The user selected level
     */
-    public Game(Context menu, int level) {
+    public Game(Context menu, int level, MainActivity main) {
         super(menu); // Call the superclass SurfaceView's constructor
         getHolder().addCallback(this);
         this.level = level;
+        this.main = main;
 
         levelspeed = 200+(level*100);
 
@@ -164,8 +168,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
                     obstacles.remove(i);
                     playing = false;
                     reset = true; //player has failed level
-                    Intent intent = new Intent().setClass(getContext(), MainActivity.class);
-                    getContext().startActivity(intent);
+                    goBackToMenu();
                     break;
                 }
                 //remove missile if it is way off the screen
@@ -180,11 +183,18 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             if ((plane.getY() < 0) || (plane.getY() > getHeight())) {
                 playing = false;
                 reset = true; //player has failed level
-                // Go back to the main menu
-                Intent intent = new Intent().setClass(getContext(), MainActivity.class);
-                getContext().startActivity(intent);
+                goBackToMenu();
+
             }
         }
+    }
+
+    public void goBackToMenu() {
+        //updateleaderboards
+        main.updateLeaderboards(playerscore);
+        // Go back to the main menu
+        Intent intent = new Intent().setClass(getContext(), MainActivity.class);
+        getContext().startActivity(intent);
     }
 
 

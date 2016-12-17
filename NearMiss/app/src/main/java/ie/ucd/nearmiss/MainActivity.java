@@ -1,6 +1,7 @@
 package ie.ucd.nearmiss;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -208,18 +209,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // Method which updates the leadboards. It takes scoreToPush and the current level and uses that to push the score to the Google play servers
     public void updateLeaderboards(int scoreToPush) {
-        if (level == 0) {
-            Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.easy_leaderboard),
-                    scoreToPush);
+        if (isSignedIn()) {
+            if (level == 0) {
+                Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.easy_leaderboard),
+                        scoreToPush);
+            } else if (level == 1) {
+                Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.medium_leaderboard),
+                        scoreToPush);
+            } else {
+                Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.hard_leaderboard),
+                        scoreToPush);
+            }
+            Toast.makeText(this, "Score of "+ scoreToPush + " Has Been Submitted!", Toast.LENGTH_LONG).show();
         }
-        else if (level == 1) {
-            Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.medium_leaderboard),
-                    scoreToPush);
-        }
-        else {
-            Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.hard_leaderboard),
-                    scoreToPush);
-        }
+        else
+            Toast.makeText(this, "You Need to be Signed In to Submit Scores to the Leaderboard", Toast.LENGTH_LONG).show();
     }
 
     // On Click Methods
@@ -229,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button levelButton = (Button) findViewById(R.id.levelb);
         switch(clicked.getId()) {
             case R.id.playb:
-                setContentView(view = new Game(this, level));
+                setContentView(view = new Game(this, level, this));
                 break;
             case R.id.levelb:
                 if (level == 0) {
