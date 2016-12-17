@@ -45,7 +45,7 @@ public class Plane extends Sprite {
     }
 
     /**
-    * Sets whther the plane is moving up or down
+    * Sets whether the plane is moving up or down
     *
     * @param up Is the plane going up (true/false)
     */
@@ -88,8 +88,21 @@ public class Plane extends Sprite {
 
     }
 
-    //Method to return player score
-    public int planescore() {
+    /**
+     * Adds points to the player's score
+     *
+     * @param scoreToAdd The score that will be added
+     */
+    public void addScore(int scoreToAdd) {
+        score += scoreToAdd;
+    }
+
+    /**
+     * Returns the player's current score
+     *
+     * @return The current score of the player
+     */
+    public int getScore() {
         return score;
     }
 }

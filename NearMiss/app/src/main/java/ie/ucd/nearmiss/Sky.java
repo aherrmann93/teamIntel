@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 /**
-*   Class which models the Sky. The Sky is an extension of the Sprite class.
+ *   Class which models the Sky.
+ *
+ *   The Sky is an extension of the Sprite class.
 */
 
 public class Sky extends Sprite {

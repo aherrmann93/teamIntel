@@ -61,12 +61,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private int level;
     
     private long obstacleStartTime;
-    private long obstacleElapsed;
     private ArrayList<Obstacle> obstacles;
     private Random rand = new Random();
     private int levelspeed;
-    private int playerscore = 0;
-    private int obstaclespassed = 0;
     private MainActivity main;
     
 	/**
@@ -151,7 +148,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         if (playing) {
             sky.update();
             plane.update();
-            playerscore = plane.planescore()+obstaclespassed; //get player score
             long obstacleElapsed = (System.nanoTime() - obstacleStartTime) / 1000000;
             if (obstacleElapsed > (4000-(level*1000))) {
                 obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(), R.drawable.obstacle1), WIDTH + 10,100+((int)(rand.nextDouble()*(HEIGHT-100))), 200, 300, levelspeed));
@@ -166,23 +162,19 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
                 if (collision(obstacles.get(i), plane)) {
                     obstacles.remove(i);
-                    playing = false;
-                    reset = true; //player has failed level
                     goBackToMenu();
                     break;
                 }
                 //remove missile if it is way off the screen
                 if (obstacles.get(i).getX() < -100) {
                     obstacles.remove(i);
-                    obstaclespassed += 500; //Points for passing an obstacle
+                    plane.addScore(500); //Points for passing an obstacle
                     break;
                 }
             }
 
 
             if ((plane.getY() < 0) || (plane.getY() > getHeight())) {
-                playing = false;
-                reset = true; //player has failed level
                 goBackToMenu();
 
             }
@@ -190,8 +182,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void goBackToMenu() {
-        //updateleaderboards
-        main.updateLeaderboards(playerscore);
+        // Stop the game loop and reset
+        playing = false;
+        reset = true;
+        //Update the leaderboard with latest score
+        main.updateLeaderboards(plane.getScore());
         // Go back to the main menu
         Intent intent = new Intent().setClass(getContext(), MainActivity.class);
         getContext().startActivity(intent);
@@ -239,7 +234,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             paint.setColor(Color.BLACK);
             paint.setTextSize(50);
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            canvas.drawText("CURRENT SCORE: " + (playerscore), 150, 950, paint);
+            canvas.drawText("CURRENT SCORE: " + (plane.getScore()), 150, 950, paint);
         }
 
         if(!playing && !reset) {

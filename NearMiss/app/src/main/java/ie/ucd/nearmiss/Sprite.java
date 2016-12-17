@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 /**
+ * Abstract lass which describes movable objects in the game.
+ *
  * Each game object will extend this class. It contains attributes that all game objects will require.
  */
 
