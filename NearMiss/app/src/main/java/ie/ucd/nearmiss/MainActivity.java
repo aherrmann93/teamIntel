@@ -115,10 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.hard_leaderboard),
                         scoreToPush);
             }
-            Toast.makeText(this, "Score of "+ scoreToPush + " Has Been Submitted!", Toast.LENGTH_LONG).show();
         }
-        else
-            Toast.makeText(this, "You Need to be Signed In to Submit Scores to the Leaderboard", Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -195,17 +192,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button signIn = (Button) findViewById(R.id.sign_in_button);
         Button signOut = (Button) findViewById(R.id.sign_out_button);
-        if(on) {
+        if(!on) {
             // show sign-in button, hide the sign-out button
-            signIn.setVisibility(View.VISIBLE);
-            signOut.setVisibility(View.GONE);
+            signIn.setVisibility(View.GONE);
+            signOut.setVisibility(View.VISIBLE);
 
             // Change welcome label
             welcome.setText("Hello, " + displayName);
         }
         else {
-            signOut.setVisibility(View.VISIBLE);
-            signIn.setVisibility(View.GONE);
+            signOut.setVisibility(View.GONE);
+            signIn.setVisibility(View.VISIBLE);
 
             // Change welcome label
             welcome.setText("Welcome, Tap to Sign In:");

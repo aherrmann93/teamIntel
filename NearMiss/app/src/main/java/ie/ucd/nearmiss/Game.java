@@ -173,8 +173,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
                 }
             }
 
-
+            System.out.println(plane.getY());
             if ((plane.getY() < 0) || (plane.getY() > getHeight())) {
+                System.out.println("END: "+ plane.getY()+", "+getHeight());
                 goBackToMenu();
 
             }
@@ -207,7 +208,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         // Need to scale the background to fit the phone that the user is using
         final double scaleFactorX = (double)getWidth()/sky.getWidth();
         final double scaleFactorY = (double)getHeight()/sky.getHeight();
-        //System.out.println(getWidth() + " , " + getHeight() + " , " + scaleFactorX + " , " + scaleFactorY);
+        System.out.println(getWidth() + " , " + getHeight() + " , " + scaleFactorX + " , " + scaleFactorY);
 
         // If the canvas exists, draw the objects
         if(canvas!=null) {
@@ -234,7 +235,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             paint.setColor(Color.BLACK);
             paint.setTextSize(50);
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            canvas.drawText("CURRENT SCORE: " + (plane.getScore()), 150, 950, paint);
+            canvas.drawText("CURRENT SCORE: " + (plane.getScore()), 50, 50, paint);
         }
 
         if(!playing && !reset) {

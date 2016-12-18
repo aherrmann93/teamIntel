@@ -117,11 +117,13 @@ public class ControllerThread extends Thread {
             // Calculate the wait time in order to cap the frame rate at 30FPS
             timeMillis = (System.nanoTime() - startTime)/1000000;
             waitTime = targetTime-timeMillis;
+            if (waitTime > 0) {
 
-            try {
-                sleep(waitTime);
-            } catch (Exception e) {
-                e.printStackTrace();
+                try {
+                    sleep(waitTime);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             totalTime += System.nanoTime()-startTime;
