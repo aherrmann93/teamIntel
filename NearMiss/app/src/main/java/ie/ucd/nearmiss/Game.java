@@ -108,7 +108,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         sky = new Sky(BitmapFactory.decodeResource(getResources(),R.drawable.sky_wikipedia),2560,1349);
-        plane = new Plane(BitmapFactory.decodeResource(getResources(),R.drawable.plane),400,200);
+        plane = new Plane(BitmapFactory.decodeResource(getResources(),R.drawable.plane),225,82);
         sky.setVecX(-5); // start moving the sky by -5px/ms (I think those are the right units?)
         obstacles = new ArrayList<Obstacle>();
         obstacleStartTime = System.nanoTime();
@@ -150,7 +150,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             plane.update();
             long obstacleElapsed = (System.nanoTime() - obstacleStartTime) / 1000000;
             if (obstacleElapsed > (4000-(level*1000))) {
-                obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(), R.drawable.obstacle1), WIDTH + 10,100+((int)(rand.nextDouble()*(HEIGHT-100))), 200, 300, levelspeed));
+                obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(), R.drawable.obstacle1), WIDTH + 10,100+((int)(rand.nextDouble()*(HEIGHT-100))), 36, 89, levelspeed));
                 obstacleStartTime = System.nanoTime();
             }
 
