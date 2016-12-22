@@ -11,11 +11,11 @@ public class Plane extends Sprite {
     /**
     * Initial position of the plane in the x plane
     */
-    private static final int STARTPOSX = 100;
+    public static final int STARTPOSX = 100;
     /**
     * Initial position of the plane in the y plane
     */
-    private static final int STARTPOSY = 50;
+    public static final int STARTPOSY = 50;
     /**
     * Is the plane going up or down?
     */

@@ -1,6 +1,5 @@
 package ie.ucd.nearmiss;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -8,14 +7,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint; //add paint for scoreboard
 import android.graphics.Typeface;
-import android.support.design.widget.Snackbar;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.Random;
 import android.graphics.Rect;
-import android.widget.Toast;
 
 /**
  * Game View which Handles the Interaction Between the Game Controller and the Models for Each Sprite
@@ -42,15 +39,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     /**
 	* Sky object 
 	*/
-    private Sky sky;
+    public Sky sky;
     /**
 	* Plane object
 	*/
-    private Plane plane;
+    public Plane plane;
     /**
 	* Is the game currently being played?
 	*/
-    private boolean playing = false;
+    public boolean playing = false;
     /**
      * Has the player lost in the game?
      */
@@ -59,11 +56,25 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 	* User selected level
 	*/
     private int level;
-    
+    /**
+     * Time when an obstacle was created
+     */
     private long obstacleStartTime;
+    /**
+     * Array of obstacles
+     */
     private ArrayList<Obstacle> obstacles;
+    /**
+     * Random variable
+     */
     private Random rand = new Random();
+    /**
+     * Speed dependent on the level selected
+     */
     private int levelspeed;
+    /**
+     * Reference to the Main Activity
+     */
     private MainActivity main;
     
 	/**
@@ -107,15 +118,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        sky = new Sky(BitmapFactory.decodeResource(getResources(),R.drawable.sky_wikipedia),2560,1349);
-        plane = new Plane(BitmapFactory.decodeResource(getResources(),R.drawable.plane),225,82);
-        sky.setVecX(-5); // start moving the sky by -5px/ms (I think those are the right units?)
-        obstacles = new ArrayList<Obstacle>();
-        obstacleStartTime = System.nanoTime();
-
-
-        controllerThread.setRunning(true);
-        controllerThread.start();
+        createInitObjects();
     }
 
     /** 
@@ -147,6 +150,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     public void update() {
         if (playing) {
             sky.update();
+            System.out.println("INFO: Sky x position:"+sky.getX());
             plane.update();
             long obstacleElapsed = (System.nanoTime() - obstacleStartTime) / 1000000;
             if (obstacleElapsed > (4000-(level*1000))) {
@@ -180,6 +184,19 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
             }
         }
+    }
+
+    public void createInitObjects() {
+        sky = new Sky(BitmapFactory.decodeResource(getResources(),R.drawable.sky_wikipedia),2560,1349);
+        plane = new Plane(BitmapFactory.decodeResource(getResources(),R.drawable.plane),225,82);
+        sky.setVecX(-5); // start moving the sky by -5px/ms (I think those are the right units?)
+        System.out.println("INFO: Sky x position:"+sky.getX());
+        obstacles = new ArrayList<Obstacle>();
+        obstacleStartTime = System.nanoTime();
+
+
+        controllerThread.setRunning(true);
+        controllerThread.start();
     }
 
     public void goBackToMenu() {
