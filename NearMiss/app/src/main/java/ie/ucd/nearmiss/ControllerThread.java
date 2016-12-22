@@ -21,7 +21,7 @@ public class ControllerThread extends Thread {
     /**
     * Average frames per second.
     */
-    private double averageFPS;
+    public double averageFPS;
     /**
     * Abstract interface to the surface view.
     */

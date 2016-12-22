@@ -1,11 +1,8 @@
 package ie.ucd.nearmiss;
 
 import android.content.Context;
-import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.MotionEvent;
-import android.view.View;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +13,11 @@ import static org.junit.Assert.*;
 
 
 /**
+ * Check that the game objects are not moving when the user launches the game.
+ *
+ * This test checks the sky, plane and score to check that they have not moved from the default starting position.
+ * It also checks that the FPS that the Controller is achieving is less than the cap of 30.
+ *
  * Instrumentation test, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
@@ -26,13 +28,7 @@ public class GameStartUnitTest {
     public Context appContext;
     public MainActivity mainActivity;
     public Game game;
-    public View view;
 
-    public MotionEvent motionDownEvent;
-    public MotionEvent motionUpEvent;
-
-    long downTime = SystemClock.uptimeMillis();
-    long eventTime = SystemClock.uptimeMillis() + 100;
 
     public int level = 1;
 
@@ -44,24 +40,6 @@ public class GameStartUnitTest {
         game = new Game(appContext,level,mainActivity);
         // Create the objects that are created when the surface is created
         game.createInitObjects();
-
-        // Define a motion events
-        motionDownEvent = MotionEvent.obtain(
-                downTime,
-                eventTime,
-                MotionEvent.ACTION_DOWN,
-                50,
-                50,
-                1
-        );
-        motionUpEvent = MotionEvent.obtain(
-                downTime,
-                eventTime,
-                MotionEvent.ACTION_UP,
-                50,
-                50,
-                1
-        );
     }
 
     @Test
@@ -70,18 +48,28 @@ public class GameStartUnitTest {
     }
 
     @Test
-    public void checkNothingMoving() throws Exception {
+    public void checkGameIsNotInPlay() throws Exception {
+        assertFalse("Playing must be false", game.playing);
+    }
 
-        // Check playing is false
-        assertFalse("Playing must be false",game.playing);
-        // Check Sky is not moving
-        assertEquals("Check Sky has not moved",0,game.sky.getX(),0);
-        // Check Plane is not moving
+    @Test
+    public void checkSkyIsNotMoving() throws Exception {
+        assertEquals("Check Sky has not moved", 0, game.sky.getX(), 0);
+    }
+
+    @Test
+    public void checkPlaneIsNotMoving() throws Exception {
         assertEquals("Check Sky has not moved",game.plane.STARTPOSY,game.plane.getY(),0);
     }
 
-//    @Test
-//    public void checkStart() throws Exception {
-//        view.dispatchTouchEvent(motionEvent);
-//    }
+    @Test
+    public void checkScoreIsZero() throws Exception {
+        assertEquals("Score must be zero at the start",0,game.plane.getScore(),0);
+    }
+
+    @Test
+    public void checkFPS() throws Exception {
+        assertTrue("FPS has to be capped at 30",game.controllerThread.averageFPS < 31);
+    }
+
 }

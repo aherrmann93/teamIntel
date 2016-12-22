@@ -35,7 +35,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     /**
 	* Game Controller class
 	*/
-    private ControllerThread controllerThread;
+    public ControllerThread controllerThread;
     /**
 	* Sky object 
 	*/
@@ -149,9 +149,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
     public void update() {
         if (playing) {
-            sky.update();
-            System.out.println("INFO: Sky x position:"+sky.getX());
-            plane.update();
+            sky.update();   // update position of the sky
+            plane.update(); // update position of the plane
+
+            // generate obstacles
             long obstacleElapsed = (System.nanoTime() - obstacleStartTime) / 1000000;
             if (obstacleElapsed > (4000-(level*1000))) {
                 obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(), R.drawable.obstacle1), WIDTH + 10,100+((int)(rand.nextDouble()*(HEIGHT-100))), 36, 89, levelspeed));
@@ -159,7 +160,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             }
 
 
-            //loop through every missile and check collision and remove
+            //loop through every obstacle and check collision and remove
             for (int i = 0; i < obstacles.size(); i++) {
                 //update missile
                 obstacles.get(i).update();
@@ -169,7 +170,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
                     goBackToMenu();
                     break;
                 }
-                //remove missile if it is way off the screen
+                //remove obstacle if it is way off the screen
                 if (obstacles.get(i).getX() < -100) {
                     obstacles.remove(i);
                     plane.addScore(500); //Points for passing an obstacle
