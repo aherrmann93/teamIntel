@@ -12,6 +12,9 @@ import static org.junit.Assert.assertTrue;
 /**
  * Checks that the plane goes up the screen when the user is touching the screen.
  *
+ * Instrumentation test, which will execute on an Android device.
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
 public class GamePlayingUpUnitTest {
@@ -54,21 +57,11 @@ public class GamePlayingUpUnitTest {
     }
 
     /**
-     * Check that the sky is moving
-     * @throws Exception
-     */
-    @Test
-    public void checkSkyIsMoving() throws Exception {
-        assertNotEquals("Check Sky has moved", 0, game.sky.getX(), 0);
-    }
-
-    /**
      * Check that the plane has moved from its starting position and that it is moving up the screen
      * @throws Exception
      */
     @Test
     public void checkPlaneIsMovingUp() throws Exception {
-        assertNotEquals("Check Plane has moved",game.plane.STARTPOSY,game.plane.getY(),0);
         assertTrue("Check that the plane is going down",game.plane.getY() < game.plane.STARTPOSY); // less than the starting position = going up
     }
 

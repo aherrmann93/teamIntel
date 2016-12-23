@@ -6,18 +6,18 @@ import android.support.test.InstrumentationRegistry;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
- * Checks that the plane is going down the screen when the user is not touching the screen.
+ * Checks that the sky has moved and is moving at the specified rate (-5px/ms)
  *
  * Instrumentation test, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
-public class GamePlayingDownUnitTest {
+public class SkyMovingUnitTest {
 
     /**
      * Application Context
@@ -50,26 +50,27 @@ public class GamePlayingDownUnitTest {
         game.createInitObjects();
         // Start game
         game.playing = true;
+        // Set plane going up
+        game.plane.goUp(true);
         // Wait for the game to update a few times
         Thread.sleep(100);
     }
 
     /**
-     * Checks that the plane has moved from the starting position and is going down the screen
+     * Check that the sky is moving
      * @throws Exception
      */
     @Test
-    public void checkPlaneIsMovingDown() throws Exception {
-        assertTrue("Check that the plane is going down",game.plane.getY() > game.plane.STARTPOSY); // greater than the starting position = going down
+    public void checkSkyHasMoving() throws Exception {
+        assertNotEquals("Check Sky has moved", 0, game.sky.getX(), 0);
     }
 
     /**
-     * Checks that the score is incrementing
+     * Check sky is moving at -5px/ms
      * @throws Exception
      */
     @Test
-    public void checkScoreIsNotZero() throws Exception {
-        assertNotEquals("Score must not be zero",0,game.plane.getScore(),0);
+    public void checkSkyIsMovingatMinus5() throws Exception {
+        assertEquals("Check sky is moving at -5px/ms",-5,game.sky.getVecX(),0);
     }
-
 }

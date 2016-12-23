@@ -148,45 +148,55 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     /**
-     *
+     * Update the models, generate obstacles and check collisions
      */
     public void update() {
         if (playing) {
             sky.update();   // update position of the sky
             plane.update(); // update position of the plane
 
-            // generate obstacles
-            long obstacleElapsed = (System.nanoTime() - obstacleStartTime) / 1000000;
-            if (obstacleElapsed > (4000-(level*1000))) {
-                obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(), R.drawable.obstacle1), WIDTH + 10,100+((int)(rand.nextDouble()*(HEIGHT-100))), 36, 89, levelspeed));
-                obstacleStartTime = System.nanoTime();
-            }
+            generateObstacles(); // generate obstacles
 
+            checkCollision(); // check collision with obstacles and border
+        }
+    }
 
-            //loop through every obstacle and check collision and remove
-            for (int i = 0; i < obstacles.size(); i++) {
-                //update missile
-                obstacles.get(i).update();
+    /**
+     * Check if a collision has occured with the border or obstacles
+     */
+    private void checkCollision() {
+        //loop through every obstacle and check collision and remove
+        for (int i = 0; i < obstacles.size(); i++) {
+            //update missile
+            obstacles.get(i).update();
 
-                if (collision(obstacles.get(i), plane)) {
-                    obstacles.remove(i);
-                    goBackToMenu();
-                    break;
-                }
-                //remove obstacle if it is way off the screen
-                if (obstacles.get(i).getX() < -100) {
-                    obstacles.remove(i);
-                    plane.addScore(500); //Points for passing an obstacle
-                    break;
-                }
-            }
-
-            System.out.println(plane.getY());
-            if ((plane.getY() < 0) || (plane.getY() > getHeight())) {
-                System.out.println("END: "+ plane.getY()+", "+getHeight());
+            if (collision(obstacles.get(i), plane)) {
+                obstacles.remove(i);
                 goBackToMenu();
-
+                break;
             }
+            //remove obstacle if it is way off the screen
+            if (obstacles.get(i).getX() < -100) {
+                obstacles.remove(i);
+                plane.addScore(500); //Points for passing an obstacle
+                break;
+            }
+        }
+
+        // If the plane has collided with the screen borders
+        if ((plane.getY() < 0) || (plane.getY() > getHeight())) {
+            goBackToMenu();
+        }
+    }
+
+    /**
+     * Generate obstacles based on level selected
+     */
+    public void generateObstacles() {
+        long obstacleElapsed = (System.nanoTime() - obstacleStartTime) / 1000000;
+        if (obstacleElapsed > (4000-(level*1000))) {
+            obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(), R.drawable.obstacle1), WIDTH + 10,100+((int)(rand.nextDouble()*(HEIGHT-100))), 36, 89, levelspeed));
+            obstacleStartTime = System.nanoTime();
         }
     }
 
@@ -235,6 +245,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         return false;
     }
 
+    /**
+     * Draw the models on the canvas
+     * @param canvas Canvas on which objects are drawn
+     */
     @Override
     public void draw(Canvas canvas) {
         // Need to scale the background to fit the phone that the user is using

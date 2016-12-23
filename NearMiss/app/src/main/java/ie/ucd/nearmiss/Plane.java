@@ -65,11 +65,11 @@ public class Plane extends Sprite {
             startTime = System.nanoTime();
         }
         if(up) {
-            setAccY(getAccY()-1.1);
+            setAccY(getAccY()-1.5);
             setVecY((int)(getAccY()));
         }
         else {
-            setAccY(getAccY()+1.1);
+            setAccY(getAccY()+1.5);
             setVecY((int)(getAccY()));
         }
         // Cap the speed at +10 and -10

@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    // Code provided by Google for their sign in process:
+    // *************** Code provided by Google for their sign in process: ******************
 
     /**
      * Checks if the user is currently signed in to Google Play Games
@@ -330,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toggleSignInButton(true, null);
     }
 
-    // End of Google Code
+    // ***************** End of Google Code **********************
 
 
 
