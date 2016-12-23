@@ -147,6 +147,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         return super.onTouchEvent(event);
     }
 
+    /**
+     *
+     */
     public void update() {
         if (playing) {
             sky.update();   // update position of the sky
@@ -187,6 +190,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         }
     }
 
+    /**
+     * Creates the objects required on initial launch of the game
+     */
     public void createInitObjects() {
         sky = new Sky(BitmapFactory.decodeResource(getResources(),R.drawable.sky_wikipedia),2560,1349);
         plane = new Plane(BitmapFactory.decodeResource(getResources(),R.drawable.plane),225,82);
@@ -200,6 +206,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         controllerThread.start();
     }
 
+    /**
+     * Method to go back to update the leaderboard with the player score and return to the main menu.
+     */
     public void goBackToMenu() {
         // Stop the game loop and reset
         playing = false;
@@ -211,7 +220,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         getContext().startActivity(intent);
     }
 
-
+    /**
+     * Method to check collision
+     * @param a Object
+     * @param b Object
+     * @return If a collision occured
+     */
     public boolean collision(Sprite a, Sprite b)
     {
         if(Rect.intersects(a.getBoundary(),b.getBoundary()))
@@ -246,7 +260,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         drawText(canvas);
     }
 
-    //Method to draw game instructions and player score
+    /**
+     * Method to draw game instructions and player score
+     */
     public void drawText(Canvas canvas) {
         if (playing) {
             Paint paint = new Paint();
