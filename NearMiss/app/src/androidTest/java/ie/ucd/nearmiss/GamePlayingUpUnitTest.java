@@ -37,14 +37,6 @@ public class GamePlayingUpUnitTest {
      * Level to pass into the game constructor
      */
     public int level = 1;
-    /**
-     * Plane position at Test 1
-     */
-    public int planePos1;
-    /**
-     * Plane position at Test 2
-     */
-    public int planePos2;
 
     /**
      * Set up the testing environment
@@ -60,6 +52,10 @@ public class GamePlayingUpUnitTest {
         game.createInitObjects();
         // Start game
         game.playing = true;
+        // Set plane to go up
+        game.plane.goUp(true);
+        Thread.sleep(100);
+
 
     }
 
@@ -69,7 +65,8 @@ public class GamePlayingUpUnitTest {
      */
     @Test
     public void checkPlaneIsMovingUp() throws Exception {
-        assertTrue("Check that the plane is going down",(planePos1=game.plane.getY()) < 600); // less than the starting position = going up
+        assertTrue("Check that the plane is going down",(game.plane.getY()) < game.plane.STARTPOSY); // less than the starting position = going up
+
     }
 
 }
