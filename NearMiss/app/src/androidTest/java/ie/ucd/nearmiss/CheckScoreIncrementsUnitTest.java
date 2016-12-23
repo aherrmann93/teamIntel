@@ -7,6 +7,7 @@ import android.support.test.InstrumentationRegistry;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNotEquals;
 
@@ -104,4 +105,17 @@ public class CheckScoreIncrementsUnitTest {
         Thread.sleep(400);
         assertTrue("Score has increased",game.plane.getScore()>score3);
     }
+
+    /**
+     * Check that manually adding points to the score (for bonus points) works as expected
+     * @throws Exception
+     */
+    @Test
+    public void checkAddScore() throws Exception {
+        int expected = game.plane.getScore()+500;
+        game.plane.addScore(500);
+        assertEquals("Points after adding 500",expected,game.plane.getScore());
+
+    }
+
 }
