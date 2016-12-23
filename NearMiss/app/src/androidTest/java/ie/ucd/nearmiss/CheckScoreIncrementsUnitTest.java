@@ -15,6 +15,7 @@ import static org.junit.Assert.assertNotEquals;
  * This unit test checks that as the game time progresses the score gets larger and larger.
  * This is tested by checking that the score is higher than the previous score at specific
  * time stamps (100ms, 200ms, 300ms and 400ms). This test is checking the scoring logic in the Game and Plane classes.
+ * The test also checks if the add score method works correctly for adding bonus points.
  *
  * Instrumentation test, which will execute on an Android device.
  *
