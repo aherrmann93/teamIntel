@@ -10,7 +10,9 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Checks that the plane goes up the screen when the user is touching the screen.
+ * This test checks that when the user does touch the screen, the plane moves up the screen. This test is set up similarly to GamePlayingDownUnitTest except the setUp method is called for the duration of the 100ms. The expected behaviour is that the plane moves up from the starting position and that the score increments.
+ *
+ * This test verifies that the update method in the ControllerThread and Game classes are updating the Plane model correctly.
  *
  * Instrumentation test, which will execute on an Android device.
  *

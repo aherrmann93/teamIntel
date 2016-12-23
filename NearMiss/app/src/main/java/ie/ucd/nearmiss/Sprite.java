@@ -184,6 +184,19 @@ public abstract class Sprite {
         return new Rect(locx,locy, locx+width, locy+height);
     }
 
+    /**
+     * Method to check collision
+     * @param a Object
+     * @return If a collision occured
+     */
+    public boolean collision(Sprite a)
+    {
+        if(Rect.intersects(a.getBoundary(),this.getBoundary()))
+        {
+            return true;
+        }
+        return false;
+    }
     // 
     /**
     * Draw the sprite on the canvas

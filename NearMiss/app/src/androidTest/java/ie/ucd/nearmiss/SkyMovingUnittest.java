@@ -10,7 +10,9 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
- * Checks that the sky has moved and is moving at the specified rate (-5px/ms)
+ * This test checks that the sky moves at the specified rate of -5px/ms across the screen. This test is set up similarly to the GamePlayingDownUnitTest and checks that the sky has moved from the starting position and that its vector is set to the specified -5px/ms.
+ *
+ * This test verifies that the update method in the ControllerThread and Game classes are updating the Sky model correctly.
  *
  * Instrumentation test, which will execute on an Android device.
  *
@@ -61,7 +63,7 @@ public class SkyMovingUnitTest {
      * @throws Exception
      */
     @Test
-    public void checkSkyHasMoving() throws Exception {
+    public void checkSkyHasMoved() throws Exception {
         assertNotEquals("Check Sky has moved", 0, game.sky.getX(), 0);
     }
 

@@ -12,7 +12,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.Random;
-import android.graphics.Rect;
 
 /**
  * Game View which Handles the Interaction Between the Game Controller and the Models for Each Sprite
@@ -59,11 +58,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     /**
      * Time when an obstacle was created
      */
-    private long obstacleStartTime;
+    public long obstacleStartTime;
     /**
      * Array of obstacles
      */
-    private ArrayList<Obstacle> obstacles;
+    public ArrayList<Obstacle> obstacles;
     /**
      * Random variable
      */
@@ -121,6 +120,22 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         createInitObjects();
     }
 
+    /**
+     * Creates the objects required on initial launch of the game
+     */
+    public void createInitObjects() {
+        sky = new Sky(BitmapFactory.decodeResource(getResources(),R.drawable.sky_wikipedia),2560,1349);
+        plane = new Plane(BitmapFactory.decodeResource(getResources(),R.drawable.plane),400,82);
+        sky.setVecX(-5); // start moving the sky by -5px/ms (I think those are the right units?)
+        System.out.println("INFO: Sky x position:"+sky.getX());
+        obstacles = new ArrayList<Obstacle>();
+        obstacleStartTime = System.nanoTime();
+
+
+        controllerThread.setRunning(true);
+        controllerThread.start();
+    }
+
     /** 
     * Controls what happens when the user touches the screen
     *
@@ -157,20 +172,25 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
             generateObstacles(); // generate obstacles
 
-            checkCollision(); // check collision with obstacles and border
+            checkObstacleCollision(); // update and check collision with obstacles
+
+            // If the plane has collided with the screen borders
+            if ((plane.getY() < 0) || (plane.getY() > getHeight())) {
+                goBackToMenu();
+            }
         }
     }
 
     /**
      * Check if a collision has occured with the border or obstacles
      */
-    private void checkCollision() {
+    private void checkObstacleCollision() {
         //loop through every obstacle and check collision and remove
         for (int i = 0; i < obstacles.size(); i++) {
-            //update missile
+            //update obstacle
             obstacles.get(i).update();
 
-            if (collision(obstacles.get(i), plane)) {
+            if (plane.collision(obstacles.get(i))) {
                 obstacles.remove(i);
                 goBackToMenu();
                 break;
@@ -183,10 +203,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             }
         }
 
-        // If the plane has collided with the screen borders
-        if ((plane.getY() < 0) || (plane.getY() > getHeight())) {
-            goBackToMenu();
-        }
     }
 
     /**
@@ -195,25 +211,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     public void generateObstacles() {
         long obstacleElapsed = (System.nanoTime() - obstacleStartTime) / 1000000;
         if (obstacleElapsed > (4000-(level*1000))) {
-            obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(), R.drawable.obstacle1), WIDTH + 10,100+((int)(rand.nextDouble()*(HEIGHT-100))), 36, 89, levelspeed));
+            obstacles.add(new Obstacle(BitmapFactory.decodeResource(getResources(), R.drawable.obstacle1), WIDTH + 10,100+((int)(rand.nextDouble()*(HEIGHT-100))), 200, 89, levelspeed));
             obstacleStartTime = System.nanoTime();
         }
-    }
-
-    /**
-     * Creates the objects required on initial launch of the game
-     */
-    public void createInitObjects() {
-        sky = new Sky(BitmapFactory.decodeResource(getResources(),R.drawable.sky_wikipedia),2560,1349);
-        plane = new Plane(BitmapFactory.decodeResource(getResources(),R.drawable.plane),225,82);
-        sky.setVecX(-5); // start moving the sky by -5px/ms (I think those are the right units?)
-        System.out.println("INFO: Sky x position:"+sky.getX());
-        obstacles = new ArrayList<Obstacle>();
-        obstacleStartTime = System.nanoTime();
-
-
-        controllerThread.setRunning(true);
-        controllerThread.start();
     }
 
     /**
@@ -228,21 +228,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         // Go back to the main menu
         Intent intent = new Intent().setClass(getContext(), MainActivity.class);
         getContext().startActivity(intent);
-    }
-
-    /**
-     * Method to check collision
-     * @param a Object
-     * @param b Object
-     * @return If a collision occured
-     */
-    public boolean collision(Sprite a, Sprite b)
-    {
-        if(Rect.intersects(a.getBoundary(),b.getBoundary()))
-        {
-            return true;
-        }
-        return false;
     }
 
     /**

@@ -13,10 +13,9 @@ import static org.junit.Assert.*;
 
 
 /**
- * Check that the game objects are not moving when the user launches the game.
+ * This test checks that when the game is started by the user, the sky and plane have been created and initially nothing is moving (since the app waits for the user to tap the screen before the objects move). This test also checks that the score has been set to 0 before the game begins. We also test that the frames per second is being capped correctly at max 30 FPS.
  *
- * This test checks the sky, plane and score to check that they have not moved from the default starting position.
- * It also checks that the FPS that the Controller is achieving is less than the cap of 30.
+ * This test verifies that the ControllerThread starts correctly and that the Sky and Plane classes have been constructed correctly.
  *
  * Instrumentation test, which will execute on an Android device.
  *
@@ -85,7 +84,7 @@ public class GameStartUnitTest {
      */
     @Test
     public void checkPlaneIsNotMoving() throws Exception {
-        assertEquals("Check Sky has not moved",game.plane.STARTPOSY,game.plane.getY(),0);
+        assertEquals("Check Plane has not moved",game.plane.STARTPOSY,game.plane.getY(),0);
     }
 
     /**
