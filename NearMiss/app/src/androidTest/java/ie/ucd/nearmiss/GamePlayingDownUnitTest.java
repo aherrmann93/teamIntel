@@ -6,11 +6,13 @@ import android.support.test.InstrumentationRegistry;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * This test checks that when the user does not touch the screen, the plane moves down the screen. This involves setting up the game similarly to the GameStartUnitTest, then starting the game and waiting for 100ms. The expected behaviour is that the plane moves down from the starting position and that the score increments.
+ * This test checks that when the user does not touch the screen, the plane moves down the screen.
+ * This involves setting up the game similarly to the GameStartUnitTest, then starting the game and waiting for 100ms.
+ * The expected behaviour is that the plane moves down from the starting position and that the score increments.
+ * This behaviour is checked multiple times at 100ms, 200ms and 300ms to make sure the plane is consistently moving down the screen.
  *
  * This test verifies that the update method in the ControllerThread and Game classes are updating the Plane model correctly.
  *
@@ -93,13 +95,6 @@ public class GamePlayingDownUnitTest {
         assertTrue("Check that the plane is going down",(game.plane.getY()) > planePos2); // greater than the starting position = going down
     }
 
-    /**
-     * Checks that the score is incrementing
-     * @throws Exception
-     */
-    @Test
-    public void checkScoreIsNotZero() throws Exception {
-        assertNotEquals("Score must not be zero",0,game.plane.getScore(),0);
-    }
+
 
 }

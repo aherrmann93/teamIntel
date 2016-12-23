@@ -10,6 +10,8 @@ import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -50,7 +52,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     /**
      * Has the player lost in the game?
      */
-    private boolean reset = false;
+    public boolean reset = false;
     /**
 	* User selected level
 	*/
@@ -268,6 +270,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             paint.setColor(Color.BLACK);
             paint.setTextSize(50);
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            paint.setColor(Color.WHITE);
             canvas.drawText("CURRENT SCORE: " + (plane.getScore()), 50, 50, paint);
         }
 

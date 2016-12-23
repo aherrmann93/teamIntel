@@ -2,25 +2,22 @@ package ie.ucd.nearmiss;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Check that a collision is detected when a plane hits an obstacle.
+ * Checks that the game ends when the plane hits the bottom border
  *
  * Instrumentation test, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 
-@RunWith(AndroidJUnit4.class)
-public class ObstacleCollisionTest {
+public class BottomBorderCollisionUnitTest {
 
     /**
      * Application Context
@@ -51,23 +48,15 @@ public class ObstacleCollisionTest {
         game = new Game(appContext, level, mainActivity);
         // Create the objects that are created when the surface is created
         game.createInitObjects();
-        game.obstacleStartTime = 0; // Set start time to zero, this will force the generation of an obstacle
-        game.generateObstacles();
-        Thread.sleep(100);
-        // Get the position of the obstacle and move the plane to where it is.
-        game.plane.setX(game.obstacles.get(0).getX());
-        game.plane.setY(game.obstacles.get(0).getY());
-        // Let the game update
-        Thread.sleep(100);
-
+        // Start game
+        game.playing = true;
+        // Wait 5 seconds to give the plane enough time to fall to hit the border
+        Thread.sleep(5000);
     }
 
     @Test
-    public void checkObstacleGenerated() throws Exception {
-        assertTrue("Obstacle Created?", 0 < game.obstacles.size());
-    }
-
-    @Test public void checkCollision() throws Exception {
-        assertTrue("Collision must occur", game.plane.collision(game.obstacles.get(0)));
+    public void checkBorderBottomCollision() {
+        assertFalse("Playing goes to false after collision with border occurs",game.playing);
+        assertTrue("Reset goes true after collision with border occurs",game.reset);
     }
 }
