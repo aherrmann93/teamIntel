@@ -71,8 +71,8 @@ public class GamePlayingDownUnitTest {
      * @throws Exception
      */
     @Test
-    public void checkPlaneIsMovingDown() throws Exception {
-        assertTrue("Check that the plane is going down",(planePos1=game.plane.getY()) > game.plane.STARTPOSY); // greater than the starting position = going down
+    public void checkPlaneIsMovingDown100ms() throws Exception {
+        assertTrue("Check that the plane is going down after 100ms",(planePos1=game.plane.getY()) > game.plane.STARTPOSY); // greater than the starting position = going down
     }
 
     /**
@@ -80,9 +80,9 @@ public class GamePlayingDownUnitTest {
      * @throws Exception
      */
     @Test
-    public void checkPlaneIsMovingDown1() throws Exception {
+    public void checkPlaneIsMovingDown200ms() throws Exception {
         Thread.sleep(200);
-        assertTrue("Check that the plane is going down",(planePos2=game.plane.getY()) > planePos1); // greater than the starting position = going down
+        assertTrue("Check that the plane is going down after 200ms",(planePos2=game.plane.getY()) > planePos1); // greater than the starting position = going down
     }
 
     /**
@@ -90,9 +90,9 @@ public class GamePlayingDownUnitTest {
      * @throws Exception
      */
     @Test
-    public void checkPlaneIsMovingDown2() throws Exception {
+    public void checkPlaneIsMovingDown300ms() throws Exception {
         Thread.sleep(300);
-        assertTrue("Check that the plane is going down",(game.plane.getY()) > planePos2); // greater than the starting position = going down
+        assertTrue("Check that the plane is going down after 300ms",(game.plane.getY()) > planePos2); // greater than the starting position = going down
     }
 
 

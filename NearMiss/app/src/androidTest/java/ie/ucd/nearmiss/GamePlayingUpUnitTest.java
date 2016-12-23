@@ -65,7 +65,7 @@ public class GamePlayingUpUnitTest {
      */
     @Test
     public void checkPlaneIsMovingUp() throws Exception {
-        assertTrue("Check that the plane is going down",(game.plane.getY()) < game.plane.STARTPOSY); // less than the starting position = going up
+        assertTrue("Check that the plane is going up",(game.plane.getY()) < game.plane.STARTPOSY); // less than the starting position = going up
 
     }
 

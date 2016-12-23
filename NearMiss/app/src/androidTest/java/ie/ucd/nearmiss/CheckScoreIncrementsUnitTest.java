@@ -84,27 +84,27 @@ public class CheckScoreIncrementsUnitTest {
      * Check that the score is incrementing at 200ms
      */
     @Test
-    public void checkScore1() throws Exception{
+    public void checkScore200ms() throws Exception{
         Thread.sleep(200);
-        assertTrue("Score has increased",(score2=game.plane.getScore())>score1);
+        assertTrue("Score has increased after 200ma",(score2=game.plane.getScore())>score1);
     }
 
     /**
      * Check that the score is incrementing at 300ms
      */
     @Test
-    public void checkScore2() throws Exception{
+    public void checkScore300ms() throws Exception{
         Thread.sleep(300);
-        assertTrue("Score has increased",(score3=game.plane.getScore())>score2);
+        assertTrue("Score has increased after 300ms",(score3=game.plane.getScore())>score2);
     }
 
     /**
      * Check that the score is incrementing at 400ms
      */
     @Test
-    public void checkScore3() throws Exception{
+    public void checkScore400ms() throws Exception{
         Thread.sleep(400);
-        assertTrue("Score has increased",game.plane.getScore()>score3);
+        assertTrue("Score has increased after 400ms",game.plane.getScore()>score3);
     }
 
     /**

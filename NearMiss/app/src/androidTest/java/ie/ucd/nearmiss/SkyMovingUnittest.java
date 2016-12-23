@@ -91,9 +91,9 @@ public class SkyMovingUnitTest {
      * @throws Exception
      */
     @Test
-    public void checkSkyHasMoved1() throws Exception {
+    public void checkSkyHasMoved1sec() throws Exception {
         Thread.sleep(1000); // wait 1 second
-        assertTrue("Check Sky has moved", (skyPos2=game.sky.getX())<skyPos1);
+        assertTrue("Check Sky has moved after 1 second", (skyPos2=game.sky.getX())<skyPos1);
     }
 
     /**
@@ -101,8 +101,8 @@ public class SkyMovingUnitTest {
      * @throws Exception
      */
     @Test
-    public void checkSkyHasMoved2() throws Exception {
+    public void checkSkyHasMoved2sec() throws Exception {
         Thread.sleep(2000); // wait 2 seconds
-        assertTrue("Check Sky has moved", game.sky.getX()<skyPos2);
+        assertTrue("Check Sky has moved after 2 seconds", game.sky.getX()<skyPos2);
     }
 }
